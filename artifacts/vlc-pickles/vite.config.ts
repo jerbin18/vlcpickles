@@ -68,12 +68,13 @@ export default defineConfig({
     port,
     strictPort: true,
     host: '0.0.0.0',
-    proxy: {
-      '/vlc-api': {
-        target: 'http://127.0.0.1:22187',
-        changeOrigin: true,
-      },
-    },
+  proxy: {
+  '/vlc-api': {
+    target: 'http://127.0.0.1:22187',
+    changeOrigin: true,
+    rewrite: (path) => path.replace(/^\/vlc-api/, '/api'),
+  },
+},
     allowedHosts: true,
     fs: {
       strict: true,
