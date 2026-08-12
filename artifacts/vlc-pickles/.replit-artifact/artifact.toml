@@ -1,0 +1,36 @@
+kind = "web"
+previewPath = "/"
+title = "VLC Pickles"
+description = "A warm, story-led online storefront for VLC Pickles where customers can browse homemade seafood pickles, place orders with their contact details, and send the order directly to WhatsApp. Includes an admin area for managing products and stock."
+version = "1.0.0"
+id = "artifacts/vlc-pickles"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22186
+
+[services.development]
+run = "pnpm --filter @workspace/vlc-pickles run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vlc-pickles", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vlc-pickles/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22186"
+BASE_PATH = "/"
+
+[[services]]
+name = "python-api"
+paths = [ "/vlc-api" ]
+localPort = 22187
+
+[services.development]
+run = "python3 backend/app.py"
