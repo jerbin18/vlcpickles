@@ -37,16 +37,17 @@ app.use("/api", router);
 // Production React frontend
 const frontendPath = path.resolve(
   process.cwd(),
-  "artifacts",
-  "vlc-pickles",
-  "dist",
-  "public",
+  "artifacts/vlc-pickles/dist/public",
 );
 
 app.use(express.static(frontendPath));
 
-// React client-side routes
-app.use((_req, res) => {
+// React client-side fallback
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    return next();
+  }
+
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
