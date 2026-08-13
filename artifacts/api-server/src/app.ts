@@ -36,8 +36,8 @@ app.use("/api", router);
 
 // Production React frontend
 const frontendPath = path.resolve(
-  process.cwd(),
-  "artifacts/vlc-pickles/dist/public",
+  import.meta.dirname,
+  "../../vlc-pickles/dist/public",
 );
 
 app.use(express.static(frontendPath));
