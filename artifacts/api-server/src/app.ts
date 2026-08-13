@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 // API routes
 app.use("/api", router);
 
-// React frontend
+// Production React frontend
 const frontendPath = path.resolve(
   process.cwd(),
   "artifacts",
@@ -46,7 +46,7 @@ const frontendPath = path.resolve(
 app.use(express.static(frontendPath));
 
 // React client-side routes
-app.get("*", (_req, res) => {
+app.use((_req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
